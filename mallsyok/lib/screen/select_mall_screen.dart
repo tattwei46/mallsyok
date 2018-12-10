@@ -113,16 +113,19 @@ class MallCard extends StatelessWidget {
         .size
         .width;
     return GestureDetector(
-        onTap: () => print("tapped"),
+        onTap: () => print(mall.mallName),
         child: Column(
           children: <Widget>[
             // TODO : Compress image size
-            CachedNetworkImage(
-              imageUrl: mall.mallImagePath,
-              placeholder: new Center(child: new CircularProgressIndicator()),
-              errorWidget: new Icon(Icons.error),
-              // to replace with nails logo
-              fit: BoxFit.cover,
+            Container(
+              height: 240.0,
+              width: width,
+              child: CachedNetworkImage(
+                imageUrl: mall.mallImagePath,
+                placeholder: new Center(child: new CircularProgressIndicator()),
+                errorWidget: new Icon(Icons.error),
+                fit: BoxFit.fill,
+              ),
             ),
             Container(
               color: Colors.black,
