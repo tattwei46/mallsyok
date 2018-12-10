@@ -3,6 +3,7 @@ import 'package:mallsyok/res/app_config.dart';
 import 'package:mallsyok/service/service_mall.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
@@ -75,9 +76,9 @@ class _SelectMallScreenState extends State<SelectMallScreen> {
   Widget showResult() {
     return new Center(
         child: new ListView.builder(
-          itemCount: 3,
+          itemCount: _mallList.length,
           itemBuilder: (BuildContext context, int index) {
-            return MallCard();
+            return MallCard(mall: _mallList[index]);
           },
         ));
   }
@@ -101,6 +102,10 @@ class _SelectMallScreenState extends State<SelectMallScreen> {
 }
 
 class MallCard extends StatelessWidget {
+  final Mall mall;
+  const MallCard(
+      {Key key, this.mall}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery
@@ -111,9 +116,12 @@ class MallCard extends StatelessWidget {
         onTap: () => print("tapped"),
         child: Column(
           children: <Widget>[
-            Image.asset(
-              'images/shopping.jpg',
-              height: 240.0,
+            // TODO : Compress image size
+            CachedNetworkImage(
+              imageUrl: mall.mallImagePath,
+              placeholder: new Center(child: new CircularProgressIndicator()),
+              errorWidget: new Icon(Icons.error),
+              // to replace with nails logo
               fit: BoxFit.cover,
             ),
             Container(
@@ -130,7 +138,7 @@ class MallCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Mall",
+                        mall.mallName,
                         style:
                         new TextStyle(color: Colors.white, fontSize: 18.0),
                       ),
