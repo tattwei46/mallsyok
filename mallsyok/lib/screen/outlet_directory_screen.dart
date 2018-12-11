@@ -4,7 +4,7 @@ import 'package:mallsyok/service/service_outlet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
 import 'package:mallsyok/model/outlet.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mallsyok/screen/select_mall_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
@@ -112,6 +112,16 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
               color: kColorPink,
             ),
           ),
+          ListTile(
+            title: Text(AppConfig.TEXT_CHANGE_MALL),
+            leading: const Icon(
+              FontAwesomeIcons.exchangeAlt,
+            ),
+            onTap: () {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => SelectMallScreen()));
+            },
+          ),
           Divider(),
           ListTile(
             title: Text(AppConfig.TEXT_PROMOTION),
@@ -126,7 +136,11 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
             leading: const Icon(
               FontAwesomeIcons.mapSigns,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      OutletDirectoryPage(mall: widget.mall)));
+            },
           ),
           Divider(),
           ListTile(
@@ -173,7 +187,7 @@ class OutletCard extends StatelessWidget {
 
   const OutletCard({Key key, this.outlet}) : super(key: key);
 
-  void navigateOutletDirectory(BuildContext context, Mall mall) {
+  void navigateOutlet(BuildContext context, Mall mall) {
     Navigator.of(context).push(new MaterialPageRoute(
         builder: (BuildContext context) => OutletDirectoryPage(mall: mall)));
   }
@@ -190,11 +204,8 @@ class OutletCard extends StatelessWidget {
               leading: CircleAvatar(
                 backgroundColor: kColorPink,
                 child: Text(
-                  outlet.outletName.substring(0,1),
-                  style: new TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white
-                  ),
+                  outlet.outletName.substring(0, 1),
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
               ),
               title: Text(

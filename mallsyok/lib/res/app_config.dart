@@ -16,4 +16,5 @@ class AppConfig {
   static const String TEXT_STORE_DIRECTORY = "Store Directory";
   static const String TEXT_GETTING_THERE = "Getting There";
   static const String TEXT_CONTACT_US = "Contact Us";
+  static const String TEXT_CHANGE_MALL = "Change Mall";
 }
