@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mallsyok/res/app_config.dart';
-import 'package:mallsyok/service/service_mall.dart';
+import 'package:mallsyok/service/service_outlet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
+import 'package:mallsyok/model/outlet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,7 +20,7 @@ class OutletDirectoryPage extends StatefulWidget {
 
 class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
   Result resultState = Result.NOT_DETERMINED;
-  List<Mall> _outletList = [];
+  List<Outlet> _outletList = [];
 
   Widget _searchButton() {
     return IconButton(
@@ -32,7 +33,7 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
   void _onEntryAdded(QuerySnapshot event) {
     if (event.documents.length > 0) {
       _outletList.addAll(
-          event.documents.map((snapshot) => Mall.fromSnapshot(snapshot)));
+          event.documents.map((snapshot) => Outlet.fromSnapshot(snapshot)));
       setState(() {
         resultState = Result.FOUND;
       });
@@ -50,7 +51,7 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
     // Reset result state
     resultState = Result.NOT_DETERMINED;
     // Get mall list
-    ServiceMall().getMallList(_onEntryAdded);
+    ServiceOutlet().getOutletList(widget.mall.key, _onEntryAdded);
 
     super.initState();
   }
@@ -84,7 +85,9 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
         child: new ListView.builder(
       itemCount: _outletList.length,
       itemBuilder: (BuildContext context, int index) {
-        return MallCard(mall: _outletList[index]);
+        return OutletCard(
+          outlet: _outletList[index],
+        );
       },
     ));
   }
@@ -98,7 +101,7 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Text(
-                  widget.mall.mallName,
+                widget.mall.mallName,
                 style: new TextStyle(
                   fontSize: 30.0,
                   color: Colors.white,
@@ -165,52 +168,50 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
   }
 }
 
-class MallCard extends StatelessWidget {
-  final Mall mall;
+class OutletCard extends StatelessWidget {
+  final Outlet outlet;
 
-  const MallCard({Key key, this.mall}) : super(key: key);
+  const OutletCard({Key key, this.outlet}) : super(key: key);
+
+  void navigateOutletDirectory(BuildContext context, Mall mall) {
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => OutletDirectoryPage(mall: mall)));
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return GestureDetector(
-        onTap: () => print(mall.mallName),
+        onTap: () {},
         child: Column(
           children: <Widget>[
             // TODO : Compress image size
-            Container(
-              height: 240.0,
-              width: width,
-              child: CachedNetworkImage(
-                imageUrl: mall.mallImagePath,
-                placeholder: new Center(child: new CircularProgressIndicator()),
-                errorWidget: new Icon(Icons.error),
-                fit: BoxFit.fill,
-              ),
-            ),
-            Container(
-              color: Colors.black,
-              width: width,
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 12.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        mall.mallName,
-                        style:
-                            new TextStyle(color: Colors.white, fontSize: 18.0),
-                      ),
-                    ],
+            ListTile(
+              leading: CircleAvatar(
+                backgroundColor: kColorPink,
+                child: Text(
+                  outlet.outletName.substring(0,1),
+                  style: new TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.white
                   ),
                 ),
               ),
-            )
+              title: Text(
+                outlet.outletName,
+                style: new TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+              subtitle: Text(
+                outlet.unitNumber,
+                style: new TextStyle(
+                  fontSize: 15.0,
+                  color: kColorPink,
+                ),
+              ),
+            ),
+            Divider(),
           ],
         ));
   }

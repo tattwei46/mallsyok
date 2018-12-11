@@ -18,9 +18,9 @@ class Outlet {
 
   Outlet.fromSnapshot(DocumentSnapshot snapshot)
       : key = snapshot.documentID,
-        outletName = snapshot.data["mallName"],
-        floorNumber = snapshot.data["mallPhone"],
-        category = snapshot.data["mallWebsite"],
-        unitNumber = snapshot.data["openingHours"],
-        contactNumber = snapshot.data["parkingWeekend"];
+        outletName = snapshot.data["outletName"],
+        floorNumber = snapshot.data["floorNumber"],
+        category = snapshot.data["category"],
+        unitNumber = snapshot.data["unitNumber"],
+        contactNumber = snapshot.data["contactNumber"];
 }
