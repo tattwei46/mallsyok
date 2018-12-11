@@ -6,6 +6,7 @@ import 'package:mallsyok/model/mall.dart';
 import 'package:mallsyok/model/outlet.dart';
 import 'package:mallsyok/screen/select_mall_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mallsyok/screen/outlet_details_screen.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
@@ -194,9 +195,12 @@ class OutletCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(new MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  OutletDetailsScreen(outlet: outlet)));
+        },
         child: Column(
           children: <Widget>[
             // TODO : Compress image size
