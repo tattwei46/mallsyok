@@ -4,6 +4,7 @@ import 'package:mallsyok/service/service_mall.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mallsyok/screen/outlet_directory_screen.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
@@ -40,12 +41,15 @@ class _SelectMallScreenState extends State<SelectMallScreen> {
     }
   }
 
+
+
   @override
   void initState() {
     // Reset result state
     resultState = Result.NOT_DETERMINED;
     // Get mall list
     ServiceMall().getMallList(_onEntryAdded);
+
     super.initState();
   }
 
@@ -106,6 +110,13 @@ class MallCard extends StatelessWidget {
   const MallCard(
       {Key key, this.mall}) : super(key: key);
 
+  void navigateOutletDirectory(BuildContext context, Mall mall){
+    Navigator.of(context).push(new MaterialPageRoute(
+        builder: (BuildContext context) => OutletDirectoryPage(
+            mall: mall
+        )));
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery
@@ -113,7 +124,9 @@ class MallCard extends StatelessWidget {
         .size
         .width;
     return GestureDetector(
-        onTap: () => print(mall.mallName),
+        onTap: () {
+          navigateOutletDirectory(context, mall);
+        },
         child: Column(
           children: <Widget>[
             // TODO : Compress image size
