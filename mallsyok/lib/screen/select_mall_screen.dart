@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mallsyok/screen/outlet_directory_screen.dart';
+import 'package:mallsyok/screen/search_mall_screen.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
@@ -21,7 +22,15 @@ class _SelectMallScreenState extends State<SelectMallScreen> {
     return IconButton(
       icon: const Icon(Icons.search),
       tooltip: AppConfig.TEXT_SEARCH_MALL,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).push(
+          new MaterialPageRoute(
+            builder: (BuildContext context) => SearchMallScreen(
+              mallList: _mallList,
+            ),
+          ),
+        );
+      },
     );
   }
 

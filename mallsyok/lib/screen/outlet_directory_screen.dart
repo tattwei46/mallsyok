@@ -8,6 +8,7 @@ import 'package:mallsyok/screen/select_mall_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mallsyok/screen/outlet_details_screen.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:mallsyok/screen/search_outlet_screen.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
@@ -29,7 +30,15 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
     return IconButton(
       icon: const Icon(Icons.search),
       tooltip: AppConfig.TEXT_SEARCH_MALL,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).push(
+          new MaterialPageRoute(
+            builder: (BuildContext context) => SearchOutletScreen(
+              outletList: _outletList,
+            ),
+          ),
+        );
+      },
     );
   }
 
