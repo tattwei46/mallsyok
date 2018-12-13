@@ -23,6 +23,7 @@ dependencies:
   cloud_firestore: ^0.8.2+3
   cached_network_image: ^0.5.1
   font_awesome_flutter: ^8.2.0
+  draggable_scrollbar: ^0.0.4
 
 dev_dependencies:
   flutter_test:
