@@ -141,7 +141,7 @@ class _SearchMallScreenState extends State<SearchMallScreen> {
           decoration: new InputDecoration(
             prefixIcon: new Icon(
               Icons.search,
-              color: Colors.black45,
+              color: Colors.white,
             ),
             border: InputBorder.none,
             hintText: "e.g. Gurney Plaza",
