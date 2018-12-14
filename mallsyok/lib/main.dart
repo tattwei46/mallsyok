@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mallsyok/startup/splash_screen.dart';
-import 'package:mallsyok/screen/select_mall_screen.dart';
+import 'package:mallsyok/screen/mall_list_screen.dart';
 import 'package:mallsyok/res/app_config.dart';
 
 void main() {
@@ -8,7 +8,7 @@ void main() {
     home: new SplashScreen(),
     theme: ThemeData(accentColor: kColorPink),
     routes: <String, WidgetBuilder>{
-      '/SelectMallScreen': (BuildContext context) => new SelectMallScreen()
+      '/SelectMallScreen': (BuildContext context) => new MallListScreen()
     },
   ));
 }

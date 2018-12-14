@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mallsyok/model/mall.dart';
-import 'package:mallsyok/screen/outlet_directory_screen.dart';
+import 'package:mallsyok/screen/outlet_list_screen.dart';
 import 'package:mallsyok/res/app_config.dart';
 
 class SearchMallScreen extends StatefulWidget {
@@ -88,7 +88,7 @@ class _SearchMallScreenState extends State<SearchMallScreen> {
             Navigator.of(context).push(
               new MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    OutletDirectoryPage(mall: _mallListResult[index]),
+                    OutletListPage(mall: _mallListResult[index]),
               ),
             );
           },

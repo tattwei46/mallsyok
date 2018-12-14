@@ -4,17 +4,18 @@ import 'package:mallsyok/service/service_mall.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:mallsyok/screen/outlet_directory_screen.dart';
+import 'package:mallsyok/screen/outlet_list_screen.dart';
 import 'package:mallsyok/screen/search_mall_screen.dart';
+import 'dart:io';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
-class SelectMallScreen extends StatefulWidget {
+class MallListScreen extends StatefulWidget {
   @override
-  _SelectMallScreenState createState() => _SelectMallScreenState();
+  _MallListScreenState createState() => _MallListScreenState();
 }
 
-class _SelectMallScreenState extends State<SelectMallScreen> {
+class _MallListScreenState extends State<MallListScreen> {
   Result resultState = Result.NOT_DETERMINED;
   List<Mall> _mallList = [];
 
@@ -49,8 +50,6 @@ class _SelectMallScreenState extends State<SelectMallScreen> {
       }
     }
   }
-
-
 
   @override
   void initState() {
@@ -89,11 +88,11 @@ class _SelectMallScreenState extends State<SelectMallScreen> {
   Widget showResult() {
     return new Center(
         child: new ListView.builder(
-          itemCount: _mallList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return MallCard(mall: _mallList[index]);
-          },
-        ));
+      itemCount: _mallList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return MallCard(mall: _mallList[index]);
+      },
+    ));
   }
 
   @override
@@ -116,22 +115,17 @@ class _SelectMallScreenState extends State<SelectMallScreen> {
 
 class MallCard extends StatelessWidget {
   final Mall mall;
-  const MallCard(
-      {Key key, this.mall}) : super(key: key);
 
-  void navigateOutletDirectory(BuildContext context, Mall mall){
+  const MallCard({Key key, this.mall}) : super(key: key);
+
+  void navigateOutletDirectory(BuildContext context, Mall mall) {
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => OutletDirectoryPage(
-            mall: mall
-        )));
+        builder: (BuildContext context) => OutletListPage(mall: mall)));
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double width = MediaQuery.of(context).size.width;
     return GestureDetector(
         onTap: () {
           navigateOutletDirectory(context, mall);
@@ -165,7 +159,7 @@ class MallCard extends StatelessWidget {
                       Text(
                         mall.mallName,
                         style:
-                        new TextStyle(color: Colors.white, fontSize: 18.0),
+                            new TextStyle(color: Colors.white, fontSize: 18.0),
                       ),
                     ],
                   ),

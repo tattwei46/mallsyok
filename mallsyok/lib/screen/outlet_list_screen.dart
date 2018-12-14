@@ -4,24 +4,23 @@ import 'package:mallsyok/service/service_outlet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
 import 'package:mallsyok/model/outlet.dart';
-import 'package:mallsyok/screen/select_mall_screen.dart';
+import 'package:mallsyok/screen/mall_list_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mallsyok/screen/outlet_details_screen.dart';
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:mallsyok/screen/search_outlet_screen.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
-class OutletDirectoryPage extends StatefulWidget {
+class OutletListPage extends StatefulWidget {
   final Mall mall;
 
-  const OutletDirectoryPage({Key key, this.mall}) : super(key: key);
+  const OutletListPage({Key key, this.mall}) : super(key: key);
 
   @override
-  _OutletDirectoryPageState createState() => _OutletDirectoryPageState();
+  _OutletListPageState createState() => _OutletListPageState();
 }
 
-class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
+class _OutletListPageState extends State<OutletListPage> {
   Result resultState = Result.NOT_DETERMINED;
   List<Outlet> _outletList = [];
   String letterHead = "0";
@@ -96,7 +95,7 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
     return new Container(
       width: width,
       height: 40.0,
-      color: kColorPink,
+      color: kAppThemeColor,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30.0, 8.0, 0.0, 0.0),
         child: Text(
@@ -149,7 +148,7 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
               ),
             ),
             decoration: BoxDecoration(
-              color: kColorPink,
+              color: kAppThemeColor,
             ),
           ),
           ListTile(
@@ -159,7 +158,7 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
             ),
             onTap: () {
               Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) => SelectMallScreen()));
+                  builder: (BuildContext context) => MallListScreen()));
             },
           ),
           Divider(),
@@ -179,7 +178,7 @@ class _OutletDirectoryPageState extends State<OutletDirectoryPage> {
             onTap: () {
               Navigator.of(context).push(new MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      OutletDirectoryPage(mall: widget.mall)));
+                      OutletListPage(mall: widget.mall)));
             },
           ),
           Divider(),
@@ -233,7 +232,7 @@ class OutletCard extends StatelessWidget {
 
   void navigateOutlet(BuildContext context, Mall mall) {
     Navigator.of(context).push(new MaterialPageRoute(
-        builder: (BuildContext context) => OutletDirectoryPage(mall: mall)));
+        builder: (BuildContext context) => OutletListPage(mall: mall)));
   }
 
   @override
@@ -265,7 +264,7 @@ class OutletCard extends StatelessWidget {
                 outlet.unitNumber,
                 style: new TextStyle(
                   fontSize: 15.0,
-                  color: kColorPink,
+                  color: kAppTextColor,
                 ),
               ),
             ),

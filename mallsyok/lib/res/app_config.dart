@@ -6,6 +6,11 @@ const kColorBlue = const Color(0xFF0336FF);
 const kColorTeal = const Color(0xFF03DAC5);
 const kColorPurple = const Color(0xFF6200EE);
 
+const kAppBarColor = kColorPink;
+const kAppThemeColor = kColorPink;
+const kAppTextColor = kColorPink;
+
+
 class AppConfig {
   static const int SPLASH_SCREEN_DURATION = 3;
   static const String APP_VERSION = "v2.0.0";
