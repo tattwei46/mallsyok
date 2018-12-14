@@ -109,12 +109,17 @@ class _OutletListPageState extends State<OutletListPage> {
   }
 
   Widget showResult(double width) {
+    String firstLetter;
     return new Center(
         child: new ListView.builder(
           itemCount: _outletList.length,
           itemBuilder: (BuildContext context, int index) {
-            if (_outletList[index].outletName.substring(0, 1) != letterHead) {
-              letterHead = _outletList[index].outletName.substring(0, 1);
+            firstLetter = _outletList[index].outletName.substring(0, 1).toUpperCase();
+            if (double.tryParse(firstLetter) != null) {
+              firstLetter = "#";
+            }
+            if (firstLetter != letterHead) {
+              letterHead = firstLetter;
               return Column(
                 children: <Widget>[
                   buildLetterHead(letterHead, width),
