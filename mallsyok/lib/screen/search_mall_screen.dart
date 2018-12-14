@@ -53,7 +53,10 @@ class _SearchMallScreenState extends State<SearchMallScreen> {
 
   Widget _clearSearchField() {
     return FlatButton(
-      child: Icon(Icons.clear),
+      child: Icon(
+        Icons.clear,
+        color: Colors.white,
+      ),
       onPressed: () {
         setState(
           () {
@@ -129,6 +132,8 @@ class _SearchMallScreenState extends State<SearchMallScreen> {
         ),
         centerTitle: true,
         title: TextField(
+          style: new TextStyle(color: Colors.white),
+          cursorColor: Colors.white,
           controller: _controller,
           focusNode: _focus,
           autofocus: true,
@@ -140,6 +145,7 @@ class _SearchMallScreenState extends State<SearchMallScreen> {
             ),
             border: InputBorder.none,
             hintText: "e.g. Gurney Plaza",
+            hintStyle: new TextStyle(color: Colors.white),
           ),
         ),
         actions: <Widget>[

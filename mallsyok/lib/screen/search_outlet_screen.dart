@@ -53,7 +53,10 @@ class _SearchOutletScreenState extends State<SearchOutletScreen> {
 
   Widget _clearSearchField() {
     return FlatButton(
-      child: Icon(Icons.clear),
+      child: Icon(
+        Icons.clear,
+        color: Colors.white,
+      ),
       onPressed: () {
         setState(
           () {
@@ -129,6 +132,8 @@ class _SearchOutletScreenState extends State<SearchOutletScreen> {
         ),
         centerTitle: true,
         title: TextField(
+          cursorColor: Colors.white,
+          style: new TextStyle(color: Colors.white),
           controller: _controller,
           focusNode: _focus,
           autofocus: true,
@@ -136,10 +141,11 @@ class _SearchOutletScreenState extends State<SearchOutletScreen> {
           decoration: new InputDecoration(
             prefixIcon: new Icon(
               Icons.search,
-              color: Colors.black45,
+              color: Colors.white,
             ),
             border: InputBorder.none,
             hintText: "e.g. McDonalds",
+            hintStyle: new TextStyle(color: Colors.white),
           ),
         ),
         actions: <Widget>[
