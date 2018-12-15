@@ -4,10 +4,9 @@ import 'package:mallsyok/service/service_outlet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mallsyok/model/mall.dart';
 import 'package:mallsyok/model/outlet.dart';
-import 'package:mallsyok/screen/mall_list_screen.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mallsyok/screen/outlet_details_screen.dart';
 import 'package:mallsyok/screen/search_outlet_screen.dart';
+import 'package:mallsyok/common_widget/platform_drawer.dart';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
@@ -33,8 +32,8 @@ class _OutletListPageState extends State<OutletListPage> {
         Navigator.of(context).push(
           new MaterialPageRoute(
             builder: (BuildContext context) => SearchOutletScreen(
-              outletList: _outletList,
-            ),
+                  outletList: _outletList,
+                ),
           ),
         );
       },
@@ -100,9 +99,7 @@ class _OutletListPageState extends State<OutletListPage> {
         padding: const EdgeInsets.fromLTRB(30.0, 8.0, 0.0, 0.0),
         child: Text(
           letter,
-          style: new TextStyle(
-              fontSize: 20.0,
-              color: Colors.white),
+          style: new TextStyle(fontSize: 20.0, color: Colors.white),
         ),
       ),
     );
@@ -112,107 +109,34 @@ class _OutletListPageState extends State<OutletListPage> {
     String firstLetter;
     return new Center(
         child: new ListView.builder(
-          itemCount: _outletList.length,
-          itemBuilder: (BuildContext context, int index) {
-            firstLetter = _outletList[index].outletName.substring(0, 1).toUpperCase();
-            if (double.tryParse(firstLetter) != null) {
-              firstLetter = "#";
-            }
-            if (firstLetter != letterHead) {
-              letterHead = firstLetter;
-              return Column(
-                children: <Widget>[
-                  buildLetterHead(letterHead, width),
-                  OutletCard(
-                    outlet: _outletList[index],
-                  )
-                ],
-              );
-            }
-            return OutletCard(
-              outlet: _outletList[index],
-            );
-          },
-        ));
-  }
-
-  Widget showDrawer() {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                widget.mall.mallName,
-                style: new TextStyle(
-                  fontSize: 30.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              color: kAppThemeColor,
-            ),
-          ),
-          ListTile(
-            title: Text(AppConfig.TEXT_CHANGE_MALL),
-            leading: const Icon(
-              FontAwesomeIcons.exchangeAlt,
-            ),
-            onTap: () {
-              Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) => MallListScreen()));
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text(AppConfig.TEXT_PROMOTION),
-            leading: const Icon(
-              FontAwesomeIcons.tags,
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            title: Text(AppConfig.TEXT_STORE_DIRECTORY),
-            leading: const Icon(
-              FontAwesomeIcons.mapSigns,
-            ),
-            onTap: () {
-              Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      OutletListPage(mall: widget.mall)));
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text(AppConfig.TEXT_GETTING_THERE),
-            leading: const Icon(
-              FontAwesomeIcons.mapMarkedAlt,
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            title: Text(AppConfig.TEXT_CONTACT_US),
-            leading: const Icon(
-              FontAwesomeIcons.envelope,
-            ),
-            onTap: () {},
-          ),
-        ],
-      ),
-    );
+      itemCount: _outletList.length,
+      itemBuilder: (BuildContext context, int index) {
+        firstLetter =
+            _outletList[index].outletName.substring(0, 1).toUpperCase();
+        if (double.tryParse(firstLetter) != null) {
+          firstLetter = "#";
+        }
+        if (firstLetter != letterHead) {
+          letterHead = firstLetter;
+          return Column(
+            children: <Widget>[
+              buildLetterHead(letterHead, width),
+              OutletCard(
+                outlet: _outletList[index],
+              )
+            ],
+          );
+        }
+        return OutletCard(
+          outlet: _outletList[index],
+        );
+      },
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double width = MediaQuery.of(context).size.width;
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: kColorPink,
@@ -225,7 +149,9 @@ class _OutletListPageState extends State<OutletListPage> {
         ],
       ),
       body: buildBody(width),
-      drawer: showDrawer(),
+      drawer: PlatformDrawer(
+        mall: widget.mall,
+      ),
     );
   }
 }

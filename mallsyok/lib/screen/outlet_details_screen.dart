@@ -17,10 +17,15 @@ class _OutletDetailsScreenState extends State<OutletDetailsScreen> {
       children: <Widget>[
         buildImage(width),
         buildOutletName(),
+        Divider(height: 8.0,),
         buildCategory(width),
+        Divider(height: 8.0,),
         buildFloor(width),
+        Divider(height: 8.0,),
         buildUnit(width),
+        Divider(height: 8.0,),
         buildContactNumber(width),
+        Divider(height: 8.0,),
       ],
     );
   }
