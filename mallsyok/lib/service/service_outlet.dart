@@ -14,4 +14,18 @@ class ServiceOutlet {
       print("Error getting outletList");
     });
   }
+
+  void getOutletListByOutletName(String mallId, String outletName, Function _onEntryAdded) {
+    Firestore.instance
+        .collection("Malls")
+        .document(mallId)
+        .collection("Outlets")
+        .where("outletName", isEqualTo: outletName)
+        .orderBy("outletName", descending: false)
+        .snapshots()
+        .listen(_onEntryAdded)
+        .onError((handleError) {
+      print("Error getting outletList");
+    });
+  }
 }

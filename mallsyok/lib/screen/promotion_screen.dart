@@ -115,28 +115,26 @@ class PromoCard extends StatelessWidget {
         builder: (BuildContext context) => PromoDetailsScreen(promo: promo)));
   }
 
-  Widget buildPromoTitle(){
+  Widget buildPromoTitle() {
     return Align(
       alignment: Alignment.topLeft,
       child: new Text(
         promo.promoName,
         maxLines: 1,
-        style: new TextStyle(
-            color: Colors.white, fontSize: 15.0),
+        style: new TextStyle(color: Colors.white, fontSize: 15.0),
       ),
     );
   }
 
-  Widget buildPromoDetails(){
+  Widget buildPromoDetails() {
     return new Text(
       promo.promoDetails,
       maxLines: 3,
-      style: new TextStyle(
-          color: Colors.white, fontSize: 15.0),
+      style: new TextStyle(color: Colors.white, fontSize: 15.0),
     );
   }
 
-  Widget buildOverlayText(double width, double cardHeight, double descHeight){
+  Widget buildOverlayText(double width, double cardHeight, double descHeight) {
     return Container(
       child: Column(
         children: <Widget>[
@@ -165,7 +163,7 @@ class PromoCard extends StatelessWidget {
     );
   }
 
-  Widget buildPromoImage(double width, double cardHeight){
+  Widget buildPromoImage(double width, double cardHeight) {
     return Container(
       height: cardHeight,
       width: width,
@@ -173,8 +171,7 @@ class PromoCard extends StatelessWidget {
         aspectRatio: 487 / 451,
         child: CachedNetworkImage(
           imageUrl: promo.promoImagePath,
-          placeholder:
-          new Center(child: new CircularProgressIndicator()),
+          placeholder: new Center(child: new CircularProgressIndicator()),
           errorWidget: new Icon(Icons.error),
           fit: BoxFit.fitWidth,
         ),
@@ -190,7 +187,8 @@ class PromoCard extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           Navigator.of(context).push(new MaterialPageRoute(
-              builder: (BuildContext context) => PromoDetailsScreen(promo: promo)));
+              builder: (BuildContext context) =>
+                  PromoDetailsScreen(promo: promo)));
         },
         child: Stack(
           children: <Widget>[

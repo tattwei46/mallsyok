@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mallsyok/res/app_config.dart';
 import 'package:mallsyok/model/promotion.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mallsyok/model/outlet.dart';
+import 'package:mallsyok/service/service_outlet.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mallsyok/screen/outlet_details_screen.dart';
 
 class PromoDetailsScreen extends StatefulWidget {
   final Promotion promo;
@@ -13,36 +18,45 @@ class PromoDetailsScreen extends StatefulWidget {
 }
 
 class _PromoDetailsScreenState extends State<PromoDetailsScreen> {
+  bool _hasOutlet = false;
+  List<Outlet> _outletList = new List<Outlet>();
+
   Widget buildBody(double width) {
     return Column(
       children: <Widget>[
         buildImage(width),
         buildPromoName(),
-        Divider(height: 8.0,),
+        Divider(
+          height: 8.0,
+        ),
         buildPromoDetails(width),
-        Divider(height: 8.0,),
+        Divider(
+          height: 8.0,
+        ),
       ],
     );
   }
 
   Widget buildPromoName() {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          widget.promo.outletName,
-          style: new TextStyle(
-            fontSize: 25.0,
-            color: Colors.black,
+    return new Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            widget.promo.outletName,
+            style: new TextStyle(
+              fontSize: 25.0,
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
+        _navigateButton(),
+      ],
     );
   }
 
   Widget buildPromoDetails(double width) {
-    //return buildDetailsRow(width, "Description", widget.promo.promoDetails);
     return Column(
       children: <Widget>[
         Align(
@@ -73,12 +87,54 @@ class _PromoDetailsScreenState extends State<PromoDetailsScreen> {
         aspectRatio: 487 / 451,
         child: CachedNetworkImage(
           imageUrl: widget.promo.promoImagePath,
-          placeholder:
-          new Center(child: new CircularProgressIndicator()),
+          placeholder: new Center(child: new CircularProgressIndicator()),
           errorWidget: new Icon(Icons.error),
           fit: BoxFit.fitWidth,
         ),
       ),
+    );
+  }
+
+  Widget buildEmpty() {
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
+
+  void _onOutletFound(QuerySnapshot event) {
+    if (event.documents.length > 0) {
+      _outletList.addAll(
+          event.documents.map((snapshot) => Outlet.fromSnapshot(snapshot)));
+
+      setState(() {
+        _hasOutlet = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _outletList.clear();
+
+    ServiceOutlet().getOutletListByOutletName(
+        widget.promo.mallKey, widget.promo.outletName, _onOutletFound);
+
+    super.initState();
+  }
+
+  Widget _navigateButton() {
+    return IconButton(
+      icon: const Icon(FontAwesomeIcons.running),
+      tooltip: "Go to store",
+      onPressed: () {
+        Navigator.of(context).push(
+          new MaterialPageRoute(
+            builder: (BuildContext context) =>
+                OutletDetailsScreen(outlet: _outletList[0]),
+          ),
+        );
+      },
     );
   }
 
@@ -100,6 +156,7 @@ class _PromoDetailsScreenState extends State<PromoDetailsScreen> {
           widget.promo.outletName,
           style: new TextStyle(color: Colors.white, fontSize: 20.0),
         ),
+        actions: <Widget>[_hasOutlet ? _navigateButton() : buildEmpty()],
       ),
       body: buildBody(width),
     );
