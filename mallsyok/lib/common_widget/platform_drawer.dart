@@ -4,6 +4,7 @@ import 'package:mallsyok/model/mall.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mallsyok/screen/mall_list_screen.dart';
 import 'package:mallsyok/screen/outlet_list_screen.dart';
+import 'package:mallsyok/screen/promotion_screen.dart';
 
 class PlatformDrawer extends StatelessWidget {
   final Mall mall;
@@ -47,7 +48,10 @@ class PlatformDrawer extends StatelessWidget {
             leading: const Icon(
               FontAwesomeIcons.tags,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => PromotionScreen(mall: mall,)));
+            },
           ),
           Divider(),
           ListTile(

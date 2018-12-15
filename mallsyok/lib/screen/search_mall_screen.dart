@@ -67,7 +67,6 @@ class _SearchMallScreenState extends State<SearchMallScreen> {
       },
     );
   }
-
   void _searchMall(String searchText) {
     _mallListResult.clear();
     if (_isSearching != null) {

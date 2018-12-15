@@ -6,7 +6,6 @@ import 'package:mallsyok/model/mall.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mallsyok/screen/outlet_list_screen.dart';
 import 'package:mallsyok/screen/search_mall_screen.dart';
-import 'dart:io';
 
 enum Result { NOT_DETERMINED, FOUND, NOT_FOUND }
 
@@ -136,11 +135,14 @@ class MallCard extends StatelessWidget {
             Container(
               height: 240.0,
               width: width,
-              child: CachedNetworkImage(
-                imageUrl: mall.mallImagePath,
-                placeholder: new Center(child: new CircularProgressIndicator()),
-                errorWidget: new Icon(Icons.error),
-                fit: BoxFit.fill,
+              child: AspectRatio(
+                aspectRatio: 487 / 451,
+                child: CachedNetworkImage(
+                  imageUrl: mall.mallImagePath,
+                  placeholder: new Center(child: new CircularProgressIndicator()),
+                  errorWidget: new Icon(Icons.error),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             Container(
