@@ -3,6 +3,13 @@ import 'package:mallsyok/res/app_config.dart';
 import 'package:mallsyok/model/mall.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+enum LauncherMode {
+  Url,
+  PhoneNumber,
+  None
+}
 
 class MallDetailsScreen extends StatefulWidget {
   final Mall mall;
@@ -17,7 +24,7 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
   List<Option> _optionList = new List<Option>();
 
   Widget buildBody(double width) {
-    return Column(
+    return ListView(
       children: <Widget>[
         buildImage(width),
         buildOptions(),
@@ -101,11 +108,11 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
   Widget buildInfoContent() {
     return Column(
       children: <Widget>[
-        buildInfoDetails("Address", widget.mall.mallAddress, FontAwesomeIcons.addressBook),
+        buildInfoDetails("Address", widget.mall.mallAddress, FontAwesomeIcons.addressBook, LauncherMode.None),
         Container(height: 30.0,),
-        buildInfoDetails("Contact Number", widget.mall.mallPhone, FontAwesomeIcons.phone),
+        buildInfoDetails("Contact Number", widget.mall.mallPhone, FontAwesomeIcons.phone, LauncherMode.PhoneNumber),
         Container(height: 30.0,),
-        buildInfoDetails("Website", widget.mall.mallWebsite, Icons.web),
+        buildInfoDetails("Website", widget.mall.mallWebsite, Icons.web, LauncherMode.Url),
       ],
     );
   }
@@ -141,7 +148,27 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
     } else return inputString;
   }
 
-  Widget buildInfoDetails(String header, String body, IconData iconData){
+
+
+  void launchURLOrPhoneNumber(String urlOrPhoneNumber, LauncherMode mode) async {
+    if (mode == LauncherMode.None) {
+      return;
+    } else {
+      if (mode == LauncherMode.PhoneNumber){
+        urlOrPhoneNumber = "tel:" + urlOrPhoneNumber;
+      }
+    }
+
+    if (urlOrPhoneNumber.length > 0) {
+      if (await canLaunch(urlOrPhoneNumber)) {
+        await launch(urlOrPhoneNumber);
+      } else {
+        throw 'Could not launch $urlOrPhoneNumber';
+      }
+    }
+  }
+
+  Widget buildInfoDetails(String header, String body, IconData iconData, LauncherMode mode){
     if (body != null) {
       body = fixEndline(body);
       return Column(
@@ -168,9 +195,14 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
               padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  body,
-                  style: new TextStyle(fontSize: 18.0),
+                child: GestureDetector(
+                  onTap: (){
+                    launchURLOrPhoneNumber(body, mode);
+                  },
+                  child: Text(
+                    body,
+                    style: new TextStyle(fontSize: 18.0),
+                  ),
                 ),
               ))
         ],
