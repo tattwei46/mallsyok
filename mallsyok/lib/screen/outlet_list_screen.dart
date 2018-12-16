@@ -93,7 +93,7 @@ class _OutletListPageState extends State<OutletListPage> {
     return new Center(
       child: Text(
         "No Result",
-        style: TextStyle(fontSize: 30.0),
+        style: TextStyle(fontSize: 20.0),
       ),
     );
   }
@@ -101,8 +101,22 @@ class _OutletListPageState extends State<OutletListPage> {
   void showOutletByCategory(String category) {
     _filteredOutletList.clear();
 
-    if (category == AppConfig.TEXT_CATEGORY_ALL){
+    if (category == AppConfig.TEXT_CATEGORY_ALL) {
       _filteredOutletList = new List<Outlet>.from(_outletList);
+    }
+    if (category == AppConfig.TEXT_CATEGORY_FITNESS) {
+      category = AppConfig.TEXT_CATEGORY_FITNESS_GYM;
+      for (int i = 0; i < _outletList.length; i++) {
+        if (_outletList[i].category == category) {
+          _filteredOutletList.add(_outletList[i]);
+        }
+      }
+      category = AppConfig.TEXT_CATEGORY_FITNESS_EQUIPMENT;
+      for (int i = 0; i < _outletList.length; i++) {
+        if (_outletList[i].category == category) {
+          _filteredOutletList.add(_outletList[i]);
+        }
+      }
     } else {
       for (int i = 0; i < _outletList.length; i++) {
         if (_outletList[i].category == category) {
@@ -110,7 +124,6 @@ class _OutletListPageState extends State<OutletListPage> {
         }
       }
     }
-
   }
 
   Widget showLoading() {
@@ -166,7 +179,9 @@ class _OutletListPageState extends State<OutletListPage> {
 
   Widget showResult(double width) {
     return Center(
-      child: _filteredOutletList.length > 0 ? buildListView(width): showNoResult(),
+      child: _filteredOutletList.length > 0
+          ? buildListView(width)
+          : showNoResult(),
     );
   }
 
@@ -188,81 +203,26 @@ class _OutletListPageState extends State<OutletListPage> {
   }
 
   void createCategoryList() {
-    //All Category
     _categoryList.add(Category(AppConfig.TEXT_CATEGORY_ALL, Icons.apps));
-
-    // Departmental Store
-    _categoryList.add(Category(
-        AppConfig.TEXT_CATEGORY_DEPARTMENT, Icons.local_grocery_store));
-
-    // Beauty & Hair Salon
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_BEAUTY, FontAwesomeIcons.cut));
-
-    // Personal Care & Pharmacy
-    _categoryList.add(
-        Category(AppConfig.TEXT_CATEGORY_PHARMACY, FontAwesomeIcons.firstAid));
-
-    // Fitness & Wellness Centre
-    // Health & Fitness Equipment
-    _categoryList.add(
-        Category(AppConfig.TEXT_CATEGORY_FITNESS, FontAwesomeIcons.dumbbell));
-
-    // Cosmetics & Skincare
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_BEAUTY, FontAwesomeIcons.cut));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_BOOK, FontAwesomeIcons.book));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_CONVENIENCE, Icons.local_convenience_store));
     _categoryList.add(Category(AppConfig.TEXT_CATEGORY_COSMETICS, Icons.face));
-
-    // Digital Lifestyle
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_DIGITAL, Icons.desktop_mac));
-
-    // Entertainment
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_ENTERTAINMENT, Icons.movie));
-    // Fashion
-    _categoryList.add(
-        Category(AppConfig.TEXT_CATEGORY_FASHION, FontAwesomeIcons.shoePrints));
-
-    // Financial Service & ATM
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_ATM, FontAwesomeIcons.piggyBank));
-
-    // Food & Beverages
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_DEPARTMENT, Icons.local_grocery_store));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_DIGITAL, Icons.desktop_mac));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_ENTERTAINMENT, Icons.movie));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_FASHION, FontAwesomeIcons.shoePrints));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_ATM, FontAwesomeIcons.piggyBank));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_FITNESS, FontAwesomeIcons.dumbbell));
     _categoryList.add(Category(AppConfig.TEXT_CATEGORY_FOOD, Icons.fastfood));
-
-    // Home & Living
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_HOME, FontAwesomeIcons.wrench));
-
-    // Convenience & Services
-    _categoryList.add(Category(
-        AppConfig.TEXT_CATEGORY_CONVENIENCE, Icons.local_convenience_store));
-
-    // Optical
-    _categoryList.add(
-        Category(AppConfig.TEXT_CATEGORY_OPTICS, FontAwesomeIcons.glasses));
-
-    // Timepieces & Jewelleries
-    _categoryList.add(
-        Category(AppConfig.TEXT_CATEGORY_JEWELLERIES, FontAwesomeIcons.ring));
-
-    // Books & Stationaries
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_BOOK, FontAwesomeIcons.book));
-
-    // Toys & Hobbies
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_GIFTS, Icons.card_giftcard));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_HOME, FontAwesomeIcons.wrench));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_MUSIC, Icons.music_note));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_OFFICE, FontAwesomeIcons.briefcase));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_OPTICS, FontAwesomeIcons.glasses));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_PHARMACY, FontAwesomeIcons.firstAid));
+    _categoryList.add(Category(AppConfig.TEXT_CATEGORY_JEWELLERIES, FontAwesomeIcons.ring));
     _categoryList.add(Category(AppConfig.TEXT_CATEGORY_TOYS, Icons.toys));
-
-    // Music & Instruments
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_MUSIC, Icons.music_note));
-
-    // Gifts & Souvenirs
-    _categoryList
-        .add(Category(AppConfig.TEXT_CATEGORY_GIFTS, Icons.card_giftcard));
-
-    // Office
-    _categoryList.add(
-        Category(AppConfig.TEXT_CATEGORY_OFFICE, FontAwesomeIcons.briefcase));
   }
 
   void resetAllCategory() {

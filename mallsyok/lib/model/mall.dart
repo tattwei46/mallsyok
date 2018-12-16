@@ -4,6 +4,7 @@ class Mall {
   String key;
   String mallName;
   String mallPhone;
+  String mallAddress;
   String mallWebsite;
   String openingHours;
   String mallImagePath;
@@ -17,6 +18,7 @@ class Mall {
   Mall(
     this.mallName,
     this.mallPhone,
+    this.mallAddress,
     this.mallWebsite,
     this.openingHours,
     this.mallImagePath,
@@ -32,6 +34,7 @@ class Mall {
       : key = snapshot.documentID,
         mallName = snapshot.data["mallName"],
         mallPhone = snapshot.data["mallPhone"],
+        mallAddress = snapshot.data["mallAddress"],
         mallWebsite = snapshot.data["mallWebsite"],
         openingHours = snapshot.data["openingHours"],
         mallImagePath = snapshot.data["mallImagePath"],

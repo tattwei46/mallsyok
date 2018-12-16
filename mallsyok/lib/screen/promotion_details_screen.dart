@@ -33,26 +33,24 @@ class _PromoDetailsScreenState extends State<PromoDetailsScreen> {
         Divider(
           height: 8.0,
         ),
+        _hasOutlet? _buildGoToStoreButton() : buildEmpty(),
       ],
     );
   }
 
   Widget buildPromoName() {
-    return new Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            widget.promo.outletName,
-            style: new TextStyle(
-              fontSize: 25.0,
-              color: Colors.black,
-            ),
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          widget.promo.outletName,
+          style: new TextStyle(
+            fontSize: 25.0,
+            color: Colors.black,
           ),
         ),
-        _navigateButton(),
-      ],
+      ),
     );
   }
 
@@ -123,18 +121,31 @@ class _PromoDetailsScreenState extends State<PromoDetailsScreen> {
     super.initState();
   }
 
-  Widget _navigateButton() {
-    return IconButton(
-      icon: const Icon(FontAwesomeIcons.running),
-      tooltip: "Go to store",
-      onPressed: () {
-        Navigator.of(context).push(
-          new MaterialPageRoute(
-            builder: (BuildContext context) =>
-                OutletDetailsScreen(outlet: _outletList[0]),
-          ),
-        );
-      },
+  Widget _buildGoToStoreButton() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            new MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  OutletDetailsScreen(outlet: _outletList[0]),
+            ),
+          );
+        },
+        child: Row(
+          children: <Widget>[
+            Text(
+              AppConfig.TEXT_GO_STORE,
+              style: TextStyle(fontSize: 15.0),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
+              child: Icon(FontAwesomeIcons.running),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -156,7 +167,6 @@ class _PromoDetailsScreenState extends State<PromoDetailsScreen> {
           widget.promo.outletName,
           style: new TextStyle(color: Colors.white, fontSize: 20.0),
         ),
-        actions: <Widget>[_hasOutlet ? _navigateButton() : buildEmpty()],
       ),
       body: buildBody(width),
     );
