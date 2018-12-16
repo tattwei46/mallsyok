@@ -82,6 +82,16 @@ class PlatformDrawer extends StatelessWidget {
             onTap: () {},
           ),
           Divider(),
+          new Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                AppConfig.APP_VERSION,
+                style: new TextStyle(color: Colors.black45, fontSize: 15.0),
+              ),
+            ),
+          )
         ],
       ),
     );
