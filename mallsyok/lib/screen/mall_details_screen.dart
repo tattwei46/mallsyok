@@ -46,7 +46,7 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
   }
 
   Widget buildSingleOption(double containerSize, double iconSize,
-      double iconTextSize, Option option, Color color) {
+      double iconTextSize, Option option) {
     bool isTapped = option.isTapped;
     return Expanded(
       child: GestureDetector(
@@ -60,13 +60,13 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
                   Icon(
                     option.iconData,
                     size: iconSize,
-                    color: isTapped ? color : Colors.black45,
+                    color: isTapped ? kAppThemeColor : Colors.black45,
                   ),
                   Text(
                     option.title,
                     style: new TextStyle(
                       fontSize: iconTextSize,
-                      color: isTapped ? color : Colors.black45,
+                      color: isTapped ? kAppThemeColor : Colors.black45,
                     ),
                   )
                 ],
@@ -318,11 +318,11 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
         child: Row(
           children: <Widget>[
             buildSingleOption(iconContainerSize, iconSize, iconTextSize,
-                _optionList[0], Colors.pink),
+                _optionList[0]),
             buildSingleOption(iconContainerSize, iconSize, iconTextSize,
-                _optionList[1], Colors.orange),
+                _optionList[1]),
             buildSingleOption(iconContainerSize, iconSize, iconTextSize,
-                _optionList[2], Colors.greenAccent),
+                _optionList[2]),
           ],
         ),
       ),
