@@ -132,7 +132,7 @@ class _MallDetailsScreenState extends State<MallDetailsScreen> {
         // Get a working string to scan for endline
         temp = inputString.substring(endLineIndexInputString, inputString.length);
         // Get endline index
-        endLineIndexTempString = temp.indexOf("\\n", 0);
+        endLineIndexTempString = temp.indexOf(searchText, 0);
         // Trim from starting point to endline index and add to output string
         outputString = outputString + temp.substring(0, endLineIndexTempString) +
             "\n";

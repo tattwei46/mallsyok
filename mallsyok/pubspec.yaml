@@ -25,6 +25,9 @@ dependencies:
   font_awesome_flutter: ^8.2.0
   draggable_scrollbar: ^0.0.4
   url_launcher: ^4.0.2
+  google_maps_flutter: ^0.0.3+3
+  location: ^1.4.1
+  flutter_google_places: ^0.1.4
 
 dev_dependencies:
   flutter_test:

@@ -26,6 +26,9 @@ class AppConfig {
   static const String TEXT_INFORMATION = "Information";
   static const String TEXT_PARKING = "Parking";
   static const String TEXT_OPENING_HOURS = "Opening Hours";
+  static const String TEXT_SERVICE_BUS = "Bus Service";
+  static const String TEXT_SERVICE_RAIL = "Rail Service";
+  static const String TEXT_SERVICE_MORE = "More Information";
   static const String TEXT_CATEGORY_ALL = "All Category";
   static const String TEXT_CATEGORY_DEPARTMENT = "Departmental Store";
   static const String TEXT_CATEGORY_BEAUTY = "Beauty & Hair Salon";

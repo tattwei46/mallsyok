@@ -6,6 +6,7 @@ class Mall {
   String mallPhone;
   String mallAddress;
   String mallWebsite;
+  String mallCoordinates;
   String openingHours;
   String mallImagePath;
   String parkingLost;
@@ -19,6 +20,7 @@ class Mall {
     this.mallName,
     this.mallPhone,
     this.mallAddress,
+    this.mallCoordinates,
     this.mallWebsite,
     this.openingHours,
     this.mallImagePath,
@@ -36,6 +38,7 @@ class Mall {
         mallPhone = snapshot.data["mallPhone"],
         mallAddress = snapshot.data["mallAddress"],
         mallWebsite = snapshot.data["mallWebsite"],
+        mallCoordinates = snapshot.data["mallCoordinates"],
         openingHours = snapshot.data["openingHours"],
         mallImagePath = snapshot.data["mallImagePath"],
         parkingLost = snapshot.data["parkingLost"],
